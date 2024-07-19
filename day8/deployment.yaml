@@ -19,3 +19,8 @@ spec:
           image: mtaori/static-webapp:latest
           ports:
             - containerPort: 80 
+          resources:
+            limits:
+              cpu: 50m
+            requests:
+              cpu: 20m
