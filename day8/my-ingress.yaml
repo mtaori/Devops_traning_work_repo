@@ -2,15 +2,35 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: example-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
   - host: myapp.local
     http:
       paths:
-      - path: /
+      - path: /frontend
         pathType: Prefix
         backend:
           service:
             name: nginx-service
             port:
-              number: 80  
+              number: 80
+  - host: myapp.remote
+    http:
+      paths:
+      - path: /backend
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-service
+            port:
+              number: 80
+  tls:
+    - hosts:
+        - myapp.local
+        - myapp.remote
+      secretName: tls-secret
