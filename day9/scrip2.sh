@@ -4,10 +4,10 @@ REPORT_FILE="/home/einfochips/Desktop/report_$(date +'%Y%m%d_%H%M%S').txt"
 THRESHOLD_CPU=90  
 THRESHOLD_MEM=90  
 
-if [ "$(id -u)" != "0" ]; then
-    echo "Script must be run as root."
-    exit 1
-fi
+# if [ "$(id -u)" != "0" ]; then
+#     echo "Script must be run as root."
+#     exit 1
+# fi
 dependencies=( "awk" "grep" "sed" "df" "top" "netstat" "service" "ping" )
 for cmd in "${dependencies[@]}"; do
     if ! command -v "$cmd" &> /dev/null; then
@@ -61,7 +61,7 @@ send_alert() {
     # mail -s "$subject" mtaori197@gmail.com < "$REPORT_FILE"
 }
 generate_report_filename() {
-    REPORT_FILE="/home/einfochips/Desktop/system_report_$(date +'%Y%m%d_%H%M%S').txt"
+    REPORT_FILE="/home/einfochips/Desktop/report_$(date +'%Y%m%d_%H%M%S').txt"
 }
 
 generate_report() {
