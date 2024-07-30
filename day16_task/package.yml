@@ -1,0 +1,7 @@
+---
+- name: Installed a specific package
+  hosts: webserver
+  tasks: 
+   - name: Install the specified package
+     apt: name=nginx state=present
+  

@@ -3,7 +3,8 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'docker'
-        DOCKERHUB_REPOSITORY = 'mtaori/javaimage:v14'
+        DOCKERHUB_REPOSITORY = 'mtaori/javaimage:v14' 
+        // here we have to parameterised the image so that if we run the pipeline it creates new image enery time
     }
 
     stages {

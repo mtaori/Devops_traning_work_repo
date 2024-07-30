@@ -1,0 +1,25 @@
+---
+ - name: file module
+   hosts: webserver
+   become: yes
+   tasks:
+     - name: file create in vm 
+       file:
+         path: /home/ubuntu/personal.txt 
+         state: touch
+
+     - name: data in file
+       copy:
+         dest: /home/ubuntu/personal.txt
+         content: 
+             "this is ansible task"
+
+     - name: Modify the data
+       lineinfile:
+           path: /home/ubuntu/personal.txt
+           line: "this the modified line"     
+     
+     - name: Deleting the file
+       file: 
+         path: /home/ubuntu/personal.txt
+         state: absent 
