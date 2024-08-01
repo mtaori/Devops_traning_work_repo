@@ -54,7 +54,7 @@
     - name: Create Backup Script
       copy:
         src: scripts/backup.sh
-        dest: /usr/local/bin/backup.sh
+        dest: backup.sh
         mode: 0755
  
     - name: Create a cron job for database backup
