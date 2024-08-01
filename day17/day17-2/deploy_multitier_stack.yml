@@ -1,0 +1,106 @@
+---
+- name: Deploy multi-tier web application stack
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+- name: Configure MySQL Database Server
+  hosts: database
+  become: yes
+  vars:
+    db_name: "mydb"
+    db_user: "myuser"
+    db_password: "mypassword"
+  tasks:
+    - name: Installing Mysql  and dependencies
+      package:
+       name: "{{item}}"
+       state: present
+       update_cache: yes
+      loop:
+       - mysql-server
+       - mysql-client
+       - python3-mysqldb
+      become: yes
+ 
+    - name: start and enable mysql service
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+    
+    - name: Create MySQL user
+      mysql_user:
+        name: "{{ db_user }}"
+        password: "{{ db_password }}"
+        host: "%"
+        priv: "{{ db_name }}.*:ALL"
+        state: present
+
+    # - name: Configure MySQL root password
+    #   mysql_user:
+    #     name: root
+    #     password: rootpassword
+    #     host: localhost
+    #     priv: "*.*:ALL"
+    #     state: present
+
+    - name: Create MySQL database
+      mysql_db:
+        name: "{{ db_name }}"
+        state: present
+
+    - name: Enable remote login to mysql
+      lineinfile:
+         path: /etc/mysql/mysql.conf.d/mysqld.cnf
+         regexp: '^bind-address'
+         line: 'bind-address = 0.0.0.0'
+         backup: yes
+      notify:
+         - Restart mysql
+
+  handlers:
+    - name: Restart mysql
+      service:
+        name: mysql 
+        state: restarted
+
+#appliation server started
+- name: Configure Application Server
+  hosts: application
+  become: yes
+  vars:
+    db_host: "192.168.1.10" 
+    db_name: "mydb"
+    db_user: "myuser"
+    db_password: "mypassword"
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Ensure Nginx service is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Deploy web application files
+      copy:
+        src: files/
+        dest: /var/www/html/
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Deploy web application configuration
+      template:
+        src: templates/app_config.php.j2
+        dest: /var/www/html/app_config.php
+        owner: www-data
+        group: www-data
+        mode: '0644'
