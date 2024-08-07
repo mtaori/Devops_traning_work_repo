@@ -3,4 +3,8 @@
 - name: Clone application repository
   git:
     repo: 'https://github.com/mtaori/flask_app.git'
+<<<<<<< HEAD
     dest: /home/ubuntu/application
+=======
+    dest: /var/www/html/application
+>>>>>>> 396811b432bb07354ccf0ffcd5772ce2e1b2814b
