@@ -1,0 +1,10 @@
+<<<<<<< HEAD
+- hosts: all
+=======
+- hosts: webserver
+>>>>>>> 396811b432bb07354ccf0ffcd5772ce2e1b2814b
+  roles:
+    - application
+    - webserver
+    - database
+    

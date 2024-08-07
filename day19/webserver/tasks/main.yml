@@ -1,0 +1,20 @@
+---
+# tasks file for webserver
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install Apache
+  apt:
+    name: apache2
+    state: present
+<<<<<<< HEAD
+    
+=======
+
+>>>>>>> 396811b432bb07354ccf0ffcd5772ce2e1b2814b
+- name: Start Apache service
+  service:
+    name: apache2
+    state: started
+    enabled: yes
