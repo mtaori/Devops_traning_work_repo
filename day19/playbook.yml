@@ -1,6 +1,0 @@
-- hosts: webserver
-  roles:
-    - application
-    - webserver
-    - database
-    

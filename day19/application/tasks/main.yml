@@ -1,6 +1,0 @@
----
-
-- name: Clone application repository
-  git:
-    repo: 'https://github.com/mtaori/flask_app.git'
-    dest: /var/www/html/application
