@@ -1,20 +1,17 @@
-<<<<<<< HEAD
+
 #!/usr/bin/env python3
-=======
-#!/usr/bin/env python
->>>>>>> 396811b432bb07354ccf0ffcd5772ce2e1b2814b
 
 import json
 import boto3
 
 def get_inventory():
-<<<<<<< HEAD
+
     ec2 = boto3.client('ec2', region_name='ap-south-1')  # Specify your region
     response = ec2.describe_instances(Filters=[{'Name': 'tag:Name', 'Values': ['Manan']}])
-=======
+
     ec2 = boto3.client('ec2', region_name='us-east-2')  
     response = ec2.describe_instances(Filters=[{'Name': 'tag:Name', 'Values': ['Bhavin']}])
->>>>>>> 396811b432bb07354ccf0ffcd5772ce2e1b2814b
+
     
     inventory = {
         'all': {
@@ -26,11 +23,9 @@ def get_inventory():
         }
     }
     
-<<<<<<< HEAD
+
     ssh_key_file = '/home/einfochips/Downloads/ansiblekey.pem'  # Path to your SSH private key file
-=======
-    ssh_key_file = '/home/einfochips/Downloads/ansible-worker.pem'  # Path to your SSH private key file
->>>>>>> 396811b432bb07354ccf0ffcd5772ce2e1b2814b
+
     ssh_user = 'ubuntu'  # SSH username
     
     for reservation in response['Reservations']:
