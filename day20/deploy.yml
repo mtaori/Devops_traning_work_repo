@@ -1,0 +1,33 @@
+---
+- name: Build Docker image on remote machine
+  hosts: all
+  remote_user: ubuntu
+  become: true
+  tasks: 
+    - name: update packages
+      apt:
+        update_cache: yes
+
+    - name: Install Docker CE
+      apt:
+        name: docker.*
+        state: present
+
+        
+    - name: Install pip
+      apt:
+        name: "{{ item }}"
+      loop:
+        - python3-pip
+    
+    # - name: collection in localhost
+    #   command:
+    #     ansible-galaxy collection install community.docker --upgrade
+
+    
+    - name: Create a data container
+      community.docker.docker_container:
+        name: mydata
+        image: busybox
+      
+

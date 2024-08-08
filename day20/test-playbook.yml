@@ -1,0 +1,9 @@
+---
+- name: Test EC2 Inventory
+  hosts: all
+  remote_user: ubuntu
+  tasks:
+    - name: Ensure the correct user is being used
+      debug:
+        msg: "The ansible_user is {{ ansible_user }}"
+
