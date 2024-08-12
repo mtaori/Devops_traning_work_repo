@@ -1,0 +1,5 @@
+---
+- name: install nginx in remote
+  hosts: frontend
+  roles: 
+     - roles 

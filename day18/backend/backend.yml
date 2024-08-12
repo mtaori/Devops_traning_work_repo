@@ -1,0 +1,5 @@
+---
+- name: Install nodejs and run app
+  hosts: backend
+  roles:
+   - roles

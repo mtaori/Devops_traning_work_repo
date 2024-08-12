@@ -1,0 +1,64 @@
+---
+  - name: Ensure ca-certificates is installed
+    apt:
+      name: ca-certificates
+      state: present
+      update_cache: yes
+ 
+  - name: Download the NodeSource GPG key
+    shell: |
+      curl -o /tmp/nodesource.gpg.key https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    args:
+      warn: false
+ 
+  - name: Add the NodeSource GPG key
+    apt_key:
+      file: "/tmp/nodesource.gpg.key"
+      state: present
+  
+  - name: update
+    apt: 
+      update_cache: yes
+    
+
+  # - name: Install the Node.js LTS repository
+  #   apt_repository:
+  #     repo: "deb https://deb.nodesource.com/node_{{ NODEJS_VERSION }}.x {{ ansible_distribution_release }} main"
+  #     state: present
+  #     update_cache: yes
+
+ 
+  - name: Install Node.js
+    apt:
+      name:
+        - nodejs
+        - npm
+      state: present
+
+  - name: Deploy Node.js application
+    copy:
+      src: /home/einfochips/Desktop/nodeapp/app.js
+      dest: /home/ubuntu
+      mode: '0755'
+
+  -  name: Install Node.js dependencies
+     ansible.builtin.command:
+      # cmd: npm install
+      chdir: /home/ubuntu
+      cmd: npm init -y
+
+  - name: Install express in remote
+    ansible.builtin.command:
+      chdir: /home/ubuntu
+      cmd: npm install express
+
+
+  - name: Start Node.js application
+    shell: 'nohup node /home/ubuntu/app.js > /home/ubuntu/nohup.out 2>&1 &'
+    args:
+       chdir: /home/ubuntu
+    
+  - debug: msg="Running node app through Ansible in remote server"
+
+
+ 
