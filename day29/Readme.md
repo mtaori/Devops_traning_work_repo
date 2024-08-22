@@ -96,11 +96,10 @@ You will create a Terraform configuration that uses a custom module to deploy a 
 
 This project is designed to take 2 hours to complete.
 
-
 Here is the steps top achive the task.
 
 Step 1:
-Create the seperate folder in which there is a main>tf file and variable>tf file
+Create the seperate folder in which there is a main.tf file and variable.tf file
 
 In main.tf file you have to make a S3 bucket and Dynamodb table.
 
@@ -288,7 +287,6 @@ variable "region" {
 
 ```
 
-
 Now apply terraform init command to install necessary dependencies.
 
 ```
@@ -296,8 +294,6 @@ terraform init
 ```
 
 ![1724258399213](images/Readme/1724258399213.png)
-
-
 
 Now apply terraform plan command to see the actual desired output before hitting the terraform apply command.
 
@@ -310,10 +306,6 @@ terraform plan
 ![1724258445767](images/Readme/1724258445767.png)
 
 ![1724258456262](images/Readme/1724258456262.png)
-
-
-
-
 
 Now apply terraform apply command:
 
