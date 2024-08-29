@@ -119,6 +119,3 @@ Delete the ALB and the associated target groups.
 
 
 
-Cleanup Security Groups:
-
-Delete the security groups created for the project.
